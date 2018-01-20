@@ -13,6 +13,7 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ["description"]
     list_filter = ["price"]
     list_editable = ["sale_price"]
+    exclude = ["slug"]
     class Meta:
         model = Product
 
