@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>Product Create</title>
+{% endblock %}
+
+{% block content %}
+    {% include "products/form_include.html" with submit_btn="Create Product" %}
+{% endblock %}
