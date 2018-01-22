@@ -14,7 +14,7 @@
             <th>Description</th>
             <th>Price</th>
         </tr>
-        {% for product in product_list %}
+        {% for product in object_list %}
             <tr>
                 <td><a href="{% url 'products:detail' slug=product.slug %}">{{ product.title }}</a></td>
                 <td>{{ product.description }}</td>

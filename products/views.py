@@ -1,31 +1,41 @@
-from django.http import HttpResponse
-from django.shortcuts import render
-
 # Create your views here.
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, ListView, CreateView
+from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 
-from products.forms import ProductAddForm
+from digitalmarketplace.mixins import MultiSlugMixin
 from .models import Product
 
 
 class ProductCreateView(CreateView):
     model = Product
     fields = ["title", "description", "price"]
-    # form_class = ProductAddForm()
-    # context_object_name = 'product'
 
     success_url = reverse_lazy('products:index')
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(MultiSlugMixin, DetailView):
     model = Product
-    context_object_name = 'product_detail'
 
 
 class ProductListView(ListView):
-    context_object_name = 'product_list'
-
     def get_queryset(self):
         """Return the last five published questions."""
-        return Product.objects.order_by('-price')  #[:5]
+        return Product.objects.order_by('-price')  # [:5]
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    fields = ["title", "description", "price", "sale_price"]
+
+    success_url = reverse_lazy('products:index')
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProductUpdateView, self).get_context_data(*args, **kwargs)
+        context["submit_btn"] = "Update"
+        return context
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+
+    success_url = reverse_lazy('products:index')
