@@ -3,13 +3,13 @@ from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 
 from digitalmarketplace.mixins import MultiSlugMixin
+from products.forms import ProductAddForm
 from .models import Product
 
 
 class ProductCreateView(CreateView):
     model = Product
-    fields = ["title", "description", "price"]
-
+    form_class = ProductAddForm
     success_url = reverse_lazy('products:index')
 
 
