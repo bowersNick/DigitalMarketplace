@@ -1,4 +1,9 @@
 # Create your views here.
+import os
+from wsgiref.util import FileWrapper
+
+from django.conf import settings
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 
@@ -39,3 +44,17 @@ class ProductDeleteView(DeleteView):
     model = Product
 
     success_url = reverse_lazy('products:index')
+
+
+class ProductDownloadView(MultiSlugMixin, DetailView):
+    model = Product
+
+    def get(self, request, *args, **kwargs):
+        obj = self.get_object()
+        filepath = os.path.join(settings.PROTECTED_ROOT, obj.media.path)
+        wrapper = FileWrapper(open(filepath))
+        response = HttpResponse(wrapper, content_type='application/force-download')
+        """ Header information for the html """
+        response["Content-Disposition"] = f"attachment; filename={obj.media.name}"
+        response["X-SendFile"] = str(obj.media.name)
+        return response
