@@ -6,7 +6,7 @@
 
 {% block content %}
 
-    <h1>{{ object.title }}</h1>
+    <h1><a href={% url 'products:download_slug' slug=object.slug %}>{{ object.title }}</a></h1>
     <p>{{ object.description }}</p>
     <p>Price: {{ object.price }}</p>
     <p>Sale Price: {{ object.sale_price }}</p>
