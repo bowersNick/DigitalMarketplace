@@ -8,6 +8,10 @@
     <form action="{% url 'products:create' %}">
         <button>Create Product</button>
     </form>
+    <form action="" method="get">
+        <input type="text" name="q" placeholder="Search" value="{{ request.GET.q }}">
+        <input type="submit" value="Search">
+    </form>
     <table style="width: 100%">
         <tr>
             <th>Title</th>

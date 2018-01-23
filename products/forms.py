@@ -8,6 +8,7 @@ from products.models import Product
 class ProductAddForm(forms.ModelForm):
     class Meta:
         model = Product
+
         fields = [
             "title",
             "description",
@@ -34,3 +35,4 @@ class ProductAddForm(forms.ModelForm):
         # if qs:
         #     raise forms.ValidationError("Title is taken, new title is needed.  Please try again.")
         return cleaned_data
+
